@@ -10,8 +10,8 @@ var del          = require('del')
 // Creating some global variables
 var DIST_PATH   = 'public/dist/';
 var HTML_FILES  = 'public/html/**/*.html';
-var SCSS_FILES  = 'public/scss/**/*.scss';
-var SCSS_MASTER = 'public/scss/master.scss';
+var SCSS_FILES  = 'public/**/*.scss';
+var SCSS_MASTER = 'public/**/master.scss';
 
 // HTML file tasks
 gulp.task('html', function () {
