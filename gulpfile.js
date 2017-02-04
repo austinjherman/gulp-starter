@@ -8,9 +8,10 @@ var concat       = require('gulp-concat');
 var del          = require('del')
 
 // Creating some global variables
-var DIST_PATH  = 'public/dist/';
-var HTML_FILES = 'public/html/**/*.html';
-var SCSS_FILES = 'public/scss/**/*.scss';
+var DIST_PATH   = 'public/dist/';
+var HTML_FILES  = 'public/html/**/*.html';
+var SCSS_FILES  = 'public/scss/**/*.scss';
+var SCSS_MASTER = 'public/scss/master.scss';
 
 // HTML file tasks
 gulp.task('html', function () {
@@ -25,7 +26,7 @@ gulp.task('html', function () {
 // SCSS File Task
 gulp.task('scss', function () {
   // grab scss files from public/scss/
-  return gulp.src(SCSS_FILES)
+  return gulp.src(SCSS_MASTER)
     // initialize source maps for easy debugging
     .pipe(sourcemaps.init())
     // autoprefix scss files
@@ -51,7 +52,7 @@ gulp.task('clean', function () {
 });
 
 // Run all tasks and build distribution folder
-gulp.task('build', ['html', 'scss']);
+gulp.task('build', ['clean', 'html', 'scss']);
 
 // Gulp watch
 gulp.task('watch', ['clean', 'build'], function () {
