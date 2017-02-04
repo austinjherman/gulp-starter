@@ -5,17 +5,19 @@ var autoprefixer = require('gulp-autoprefixer');
 var sourcemaps   = require('gulp-sourcemaps');
 var sass         = require('gulp-sass');
 var concat       = require('gulp-concat');
-var del          = require('del')
+var del          = require('del');
+var uglify       = require('gulp-uglify');
 
 // Creating some global variables
 var DIST_PATH   = 'public/dist/';
 var HTML_FILES  = 'public/html/**/*.html';
 var SCSS_FILES  = 'public/**/*.scss';
 var SCSS_MASTER = 'public/**/master.scss';
+var JS_FILES    = 'public/**/*.js';
 
 // HTML file tasks
 gulp.task('html', function () {
-  // grab html files from public/html/
+  // grab html files
   return gulp.src(HTML_FILES)
     // write them to the distribution folder
     .pipe(gulp.dest(DIST_PATH))
@@ -23,9 +25,9 @@ gulp.task('html', function () {
     .pipe(livereload());
 });
 
-// SCSS File Task
+// SCSS file task
 gulp.task('scss', function () {
-  // grab scss files from public/scss/
+  // grab scss files
   return gulp.src(SCSS_MASTER)
     // initialize source maps for easy debugging
     .pipe(sourcemaps.init())
@@ -45,6 +47,24 @@ gulp.task('scss', function () {
     .pipe(livereload());
 });
 
+// Javascript file task
+gulp.task('js', function () {
+  // grab js files
+  return gulp.src(JS_FILES)
+    // initialize source maps
+    .pipe(sourcemaps.init())
+    // uglify
+    .pipe(uglify())
+    // write to scripts.js
+    .pipe(concat('scripts.js'))
+    // write source maps
+    .pipe(sourcemaps.write())
+    // write to distribution path
+    .pipe(gulp.dest(DIST_PATH))
+    // reload the browser
+    .pipe(livereload());
+});
+
 // Delete the dist files
 gulp.task('clean', function () {
   // delete the distribution folder
@@ -52,7 +72,7 @@ gulp.task('clean', function () {
 });
 
 // Run all tasks and build distribution folder
-gulp.task('build', ['clean', 'html', 'scss']);
+gulp.task('build', ['clean', 'html', 'scss', 'js']);
 
 // Gulp watch
 gulp.task('watch', ['clean', 'build'], function () {
@@ -60,4 +80,5 @@ gulp.task('watch', ['clean', 'build'], function () {
   livereload.listen();
   gulp.watch(HTML_FILES, ['html']);
   gulp.watch(SCSS_FILES, ['scss']);
+  gulp.watch(JS_FILES, ['js']);
 });
