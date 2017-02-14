@@ -30,9 +30,9 @@ gulp.task('html', function () {
     .pipe(livereload());
 });
 
-// HTML file tasks
+// PHP file tasks
 gulp.task('php', function () {
-  // grab html files
+  // grab php files
   return gulp.src(PHP_FILES)
     // write them to the distribution folder
     .pipe(gulp.dest(DIST_PATH))
