@@ -18,11 +18,22 @@ var SCSS_FILES  = 'public/assets/**/*.scss';
 var SCSS_MASTER = 'public/assets/**/master.scss';
 var JS_FILES    = 'public/assets/**/*.js';
 var IMAGE_FILES = 'public/assets/**/*.{png, jpeg, jpg, svg, gif}';
+var PHP_FILES = 'public/**/*.php';
 
 // HTML file tasks
 gulp.task('html', function () {
   // grab html files
   return gulp.src(HTML_FILES)
+    // write them to the distribution folder
+    .pipe(gulp.dest(DIST_PATH))
+    // reload the browser
+    .pipe(livereload());
+});
+
+// HTML file tasks
+gulp.task('php', function () {
+  // grab html files
+  return gulp.src(PHP_FILES)
     // write them to the distribution folder
     .pipe(gulp.dest(DIST_PATH))
     // reload the browser
